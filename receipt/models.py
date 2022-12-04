@@ -11,3 +11,6 @@ class Receipt(models.Model):
     purchase_time = models.TimeField()
     receipt_id = models.CharField(max_length=200)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f'{self.store} - {self.total_price}'
