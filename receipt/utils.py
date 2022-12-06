@@ -32,10 +32,12 @@ def extract_data_from_receipt(url):
 
     data = {}
     data['store'] = ' '.join(data_list[0][1])
-    items = []
+    items = {}
+    item_number = 1
     for i in range(1, len(data_list[1])-3, 2):
         data_list[1][i].pop()
-        items.append(' '.join(data_list[1][i]))
+        items[item_number] = ' '.join(data_list[1][i])
+        item_number += 1
 
     total_price = float(data_list[1][-1][-1].replace('.', '').replace(',', '.'))
     tax_price = float(data_list[2][-1][-1].replace('.', '').replace(',', '.'))
