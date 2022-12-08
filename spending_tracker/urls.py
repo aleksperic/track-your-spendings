@@ -21,5 +21,5 @@ from receipt.views import index
 urlpatterns = [
     path('', index),
     path('admin/', admin.site.urls),
-    path('api/', include('receipt.urls'))
+    path('api/receipt/', include('receipt.urls'))
 ]

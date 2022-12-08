@@ -54,7 +54,7 @@ def receipt_detail_view(request, id):
 
 @api_view(['DELETE', 'POST'])
 @permission_classes([IsAuthenticated])
-def tweet_delete_view(request, id):
+def receipt_delete_view(request, id):
     qs = Receipt.objects.filter(id=id)
     if not qs.exists():
         return Response({'message': 'Receipt does not exists'}, status=404)
