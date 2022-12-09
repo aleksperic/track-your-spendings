@@ -5,4 +5,4 @@ from .models import Receipt
 class ReceiptSerializer(serializers.ModelSerializer):
     class Meta:
         model = Receipt
-        fields = '__all__'
+        fields = ['store', 'items', 'total_price', 'tax_price', 'purchase_date', 'purchase_time', 'receipt_id']

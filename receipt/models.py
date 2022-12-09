@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Receipt(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     store = models.CharField(max_length=200)
     items = models.TextField(blank=True, null=True)
     total_price = models.FloatField()

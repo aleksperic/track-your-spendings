@@ -17,13 +17,18 @@ from .utils import extract_data_from_receipt
 def index(request, *args, **kwargs):    
     return render(request, 'index.html')
 
-@api_view(['POST'])
-@authentication_classes([SessionAuthentication])
-@permission_classes([IsAuthenticated])
-def scan_receipt_preview(request):
-    data = extract_data_from_receipt(request.POST.get('unos'))    
+@api_view(['POST', 'GET'])
+# @authentication_classes([SessionAuthentication])
+# @permission_classes([IsAuthenticated])
+def scan_receipt_preview(request, *args, **kwargs):
+    # print(request.body.decode())
+    # print('-'*100)
+    # data = extract_data_from_receipt(request.POST.get('unos'))
+    data = extract_data_from_receipt(request.body.decode())
     serializer = ReceiptSerializer(data=data)  # type: ignore
     if serializer.is_valid(raise_exception=True):
+        # print(serializer.data)
+        serializer.save()#user=request.user)
         return Response(serializer.data, status=200)
     return Response({}, status=400)
 
