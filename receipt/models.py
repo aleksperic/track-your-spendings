@@ -11,6 +11,7 @@ class Receipt(models.Model):
     purchase_date = models.DateField()
     purchase_time = models.TimeField(blank=True, null=True)
     receipt_id = models.CharField(max_length=200, blank=True, null=True)
+    receipt_org = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
