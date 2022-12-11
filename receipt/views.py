@@ -25,11 +25,9 @@ def scan_receipt_preview(request, *args, **kwargs):
     # print('-'*100)
     # data = extract_data_from_receipt(request.POST.get('unos'))
     data = extract_data_from_receipt(request.body.decode())
-    print(data)
     serializer = ReceiptSerializer(data=data)  # type: ignore
     if serializer.is_valid(raise_exception=True):
-        # print(serializer.data)
-        serializer.save()#user=request.user)
+        # serializer.save(user=request.user)
         return Response(serializer.data, status=200)
     return Response({}, status=400)
 

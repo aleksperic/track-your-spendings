@@ -14,7 +14,7 @@ def extract_data_from_receipt(url):
     soup = BeautifulSoup(page.content, "html.parser")
     results = soup.find(id="collapse1")
 
-    receipt_org = json.dumps(str(results.find_all('pre'))[1:-1])
+    receipt_org = str(results.find_all('pre'))[1:-1]
     receipt = str(results.find_all('pre')).split('>')[1].split('<')[0]
 
     receipt_element_list = []
@@ -52,6 +52,6 @@ def extract_data_from_receipt(url):
     data['purchase_date'] = datetime.strptime(purchase_date, '%d/%m/%Y').date()
     data['purchase_time'] = datetime.strptime(purchase_time, '%X').time()
     data['receipt_id'] = receipt_id
-    data['org_receipt'] = receipt_org
+    data['receipt_org'] = receipt_org
     
     return data
