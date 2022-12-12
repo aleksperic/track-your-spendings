@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Welcome to spending tracking app</h1>
-    <form  class="form" method="POST" action="/api/scan">
+    <form  class="form" method="POST" action="/api/receipt/scan/">
         {% csrf_token %}
         <input type="text"  name="unos"/>
         <button type="submit">Submit</button>
