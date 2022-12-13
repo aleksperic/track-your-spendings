@@ -21,9 +21,6 @@ def index(request, *args, **kwargs):
 # @authentication_classes([SessionAuthentication])
 # @permission_classes([IsAuthenticated])
 def scan_receipt_preview(request, *args, **kwargs):
-    # print(request.body.decode())
-    # print('-'*100)
-    # data = extract_data_from_receipt(request.POST.get('unos'))
     data = extract_data_from_receipt(request.body.decode())
     serializer = ReceiptSerializer(data=data)  # type: ignore
     if serializer.is_valid(raise_exception=True):
