@@ -24,6 +24,7 @@ def scan_receipt_preview(request, *args, **kwargs):
     data = extract_data_from_receipt(request.body.decode())
     serializer = ReceiptSerializer(data=data)  # type: ignore
     if serializer.is_valid(raise_exception=True):
+        print(serializer.data['items'])
         # serializer.save(user=request.user)
         return Response(serializer.data, status=200)
     return Response({}, status=400)
