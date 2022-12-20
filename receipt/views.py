@@ -18,13 +18,14 @@ def index(request, *args, **kwargs):
     return render(request, 'index.html')
 
 @api_view(['POST', 'GET'])
-# @authentication_classes([SessionAuthentication])
+@authentication_classes([SessionAuthentication])
 # @permission_classes([IsAuthenticated])
 def scan_receipt_preview(request, *args, **kwargs):
     data = extract_data_from_receipt(request.body.decode())
     serializer = ReceiptSerializer(data=data)  # type: ignore
     if serializer.is_valid(raise_exception=True):
         print(serializer.data['items'])
+        print(request.user)
         # serializer.save(user=request.user)
         return Response(serializer.data, status=200)
     return Response({}, status=400)

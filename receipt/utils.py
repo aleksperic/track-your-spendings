@@ -36,6 +36,7 @@ def extract_data_from_receipt(url: str) -> dict:
     item_number: int = 1
     for i in range(1, len(data_list[1])-3, 2):
         data_list[1][i].pop()
+        data_list[1][i][-1] = data_list[1][i][-1].split('/')[0]
         items[item_number] = ' '.join(data_list[1][i])
         item_number += 1
 

@@ -2,10 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import QrReader from "react-qr-reader";
 import DataFetching from "./DataFetching";
-import parse from 'html-react-parser'
 import "./style.css";
 
 export default function App() {
+  
 
   const url = 'http://localhost:8000/api/receipt/scan/'
   const [scanResult, setScanResult] = useState(null);
@@ -16,13 +16,9 @@ export default function App() {
       .then(res => {
         setScanResult(res.data)
         setItems(JSON.parse(scanResult.items))
-        setReceiptOrg(JSON.parse(scanResult.receipt_org))
-        console.log(receiptOrg)
-
-        
-
+        setReceiptOrg(scanResult.receipt_org)
         console.log('Data sent', scanResult)
-        // console.log('JSON', JSON.parse(scanResult.items))
+
       }, [])
       .catch(err => console.log(err.data))
   }
@@ -35,41 +31,37 @@ export default function App() {
       setMessage("Success!")
       
       sendData();
-      
-      // console.log(data)
-      // console.log(result)
     }
   };
 
   let handleError = err => {
     // alert(err);
   };
-
-  let stringToHTML = function (str) {
-    let dom = document.createElement('div');
-    dom.innerHTML = str;
-    return dom.firstChild;
-  };
-  console.log(scanResult)
-
+  console.log(scanResult) 
   
+  const [showQrScanner, setShowQrScanner] = useState(false)
+
+    const handleClick = () => {
+      setShowQrScanner(true);
+    }
+
   return (      
     <div className="flex-container">
       <div className='one'>
-
-        <QrReader
-          delay={300}
-          onError={handleError}
-          onScan={handleScan}
-          style={{ width: "100%" }}
-          facingMode="user"
-        />
-
-        <p id='success'>{message}</p>
-        {/* <p>{result}</p> */}
+        <button className="scanBtn" onClick={handleClick}>{showQrScanner ? `Close` : `Scan`}</button>
+        <div className="innerOne">
+        {showQrScanner ? <QrReader
+            delay={300}
+            onError={handleError}
+            onScan={handleScan}
+            style={{ width: "50%" }}
+            facingMode="user"
+          /> : null}
+        </div>  
+        <div className='success'>{message}</div>
       </div>
       <div className="two">
-        <p><h1>{scanResult === null ? '' : scanResult.store}</h1></p>
+        <div className="innerTwo">{scanResult === null ? '' : scanResult.store}</div>
         <ul>
           {items === null ? '' : Object.keys(items).map((key) => {
             return (
@@ -79,8 +71,7 @@ export default function App() {
             )
           })}
         </ul>
-        <p>{scanResult === null ? '' : scanResult.total_price + ' din'}</p>
-        
+        <div className="price">Ukupno: {scanResult === null ? '' : scanResult.total_price + ' din'}</div>
       </div>
     </div>
 

@@ -1,11 +1,19 @@
+html, body {
+  box-sizing: border-box;
+  height:100%;
+  padding: 10px;
+  padding-bottom: 10px;
+}
+
 #root {
   margin: auto;
   width: auto;
   border: 3px solid green;
   padding: 10px;
+  height: 100%;
 }
 
-#success {
+.success {
   font-family: Lato;
   text-align: center;
   font-size: 20px;
@@ -20,35 +28,69 @@ h1, p {
   width: 200px;
 }
 
-.textt {
-  display: flex;
-}
-
 .flex-container {
   display: flex;
   height: 100%;
+  border: 2px solid red;
 }
 
 .one{
+  flex: 1;
+  flex-direction: column;
   text-align: center;
-    font-size: 30px;
-    color: white;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: auto;
-    width:50%;
+  font-size: 30px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  width:50%;
+}
+
+.scanBtn {
+  order: 1;
+}
+
+.innerOne {
+  order: -1;
+}
+
+.one > div, button {
+  flex: 1;
+  text-align: center;
+  font-size: 30px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  width:50%;
 }  
 
 .two {
+  flex: 1;
+  background-color: blanchedalmond;
+  flex-direction: column;
   text-align: center;
-    font-size: 30px;
-    color: black;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: auto;
-    width:50%;
+  font-size: 30px;
+  color: black;
+  padding: 10px;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  height: auto;
+  width:50%;
+}
+.two > div ul {
+  flex: 1;
+  background-color: blanchedalmond;
+  text-align: center;
+  font-size: 30px;
+  color: black;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  width:50%;
 }
