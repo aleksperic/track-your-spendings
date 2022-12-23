@@ -1,4 +1,7 @@
 import './style.css';
+import SignUpForm from "./SignUp";
+import { useState } from 'react';
+
 
 
 export default function LoginForm() {
@@ -32,6 +35,11 @@ export default function LoginForm() {
             sendData(data);
         })
     };
+    const [showComponent, setShowComponent] = useState(false);
+  
+    function handleButtonClick() {
+      setShowComponent(!showComponent);
+    }
 
     return (
         <form>
@@ -47,7 +55,9 @@ export default function LoginForm() {
             <br />
             <input type="submit" value="Submit" />
             <br />
-            <button className='signUpBtn' type="button">Sign Up</button>
+            {/* <input className='signUpBtn' type="submit" value="Sign Up" /> */}
+            {showComponent ? <SignUpForm /> : null}
+            <button className='signUpBtn' type="submit" onClick={handleButtonClick}>Sign Up</button>
         </form>
     );
 

@@ -44,6 +44,7 @@ export default function App() {
   const handleClick = () => {
     setShowQrScanner(!showQrScanner);
   }
+  
 
   return (
     // <div className="flex-container">
@@ -74,7 +75,7 @@ export default function App() {
     //     <div className="price">{scanResult === null ? '' : 'Ukupno: ' + scanResult.total_price + ' din'}</div>
     //   </div>
     // </div>
-    // <LoginForm />
-    <SignUpForm />
+    <LoginForm />
+    // <SignUpForm />
   );
 }
