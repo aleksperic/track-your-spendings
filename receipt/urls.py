@@ -9,9 +9,9 @@ from .views import (
     )
 
 urlpatterns = [
-    path('', receipt_list_view),
-    path('scan/', scan_receipt_preview),
-    path('create/', receipt_create_view),
-    path('<int:id>/', receipt_detail_view),
-    path('<int:id>/delete', receipt_delete_view),
+    path('', receipt_list_view, name='home'),
+    path('scan/', scan_receipt_preview, name='scan'),
+    path('create/', receipt_create_view, name='create'),
+    path('<int:id>/', receipt_detail_view, name='detail'),
+    path('<int:id>/delete', receipt_delete_view, name='delete'),
 ]
