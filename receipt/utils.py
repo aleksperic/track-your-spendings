@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 def extract_data_from_receipt(url: str) -> dict:
     if not url.startswith('https://suf.purs.gov.rs/'):
         print('Bad url')
-        return
+        return None
 
     page = requests.get(url=url)
     soup = BeautifulSoup(page.content, "html.parser")
@@ -55,13 +55,3 @@ def extract_data_from_receipt(url: str) -> dict:
     data['receipt_org'] = receipt_org
     
     return data
-
-if __name__ == "__main__":
-
-    # from serializers import ReceiptSerializer
-    URL4 = 'https://suf.purs.gov.rs/v/?vl=A1NYQUw0M0gyU1hBTDQzSDIITAEAeksBAIyF8gAAAAAAAAABhM8QGrIAAAAt95lHkGrxjvkz7F66Kmj6iuQ4OHm58KH3q%2FKY%2FLAtEPcsWTEc7zro0K2fVyRxuyaFBBdPNjA21FV6UQkcQsJ7P28ksbrmydpP50obk6zs%2BU63tKKQX78oG0zDEbh2tPX4I4oSEar314UomgiGiwN91Slzc7nV4uLG7tOS%2F%2BIhtm6iTBp3pzuZ7iJtcdUMH6ehwpCgktWQmKr2gNVZKgt3xJ8gRbgh%2FbiEDlaoa%2FtEGppgmxryFoRc0kU6TfVPDhU%2FAGZ0RIo29ZvzYeAI%2BeE3jNg8PsOQp3QgcmGESzqX1UpiNvLa98EjhzfNyrBbsRsYoM3%2FHWyQ%2FoAEqWqrvTv7W6%2BD4NFngG0GkhaMK9u%2FeLjoQ8SDb7sWGFD0RjQ7aYeVaY0fydFKcVW2TMvcr%2BQV1zrM%2BGtpL2Ahwnu2u5pUddh%2FfW50N9MHL2r%2BQmxWIb8rvCOg3a%2Bogs1ZPfQXsbzwCuLWrwLS6BShEQUn9OmZCn9Fj0V9925QNrZJR5M2Pw8ezCAD1ApluKfGX3eqGbgUUXcB5Kbumxd4rpi1cVZQ4IT0adUGQUpNYlqveSbBFRRlyhzuN7OGYC%2BEBLqqTVUFe9KorjjOfuK%2BgOAC4gePjvvimwoii4L%2BnjHOEU5STzDmIU7c%2BYT1sMeoXV4V0ujcc5VUDJHoZI02O5%2BNjUNyZdr63z3ac9Tn0GHGivjo0uI%3D'
-
-    data = extract_data_from_receipt(URL4)
-
-    # serializer = ReceiptSerializer(data=data)
-    print(data['items'])
