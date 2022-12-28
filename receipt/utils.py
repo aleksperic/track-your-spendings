@@ -4,9 +4,8 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 
-def extract_data_from_receipt(url: str) -> dict:
+def extract_data_from_receipt(url: str) -> dict | None:
     if not url.startswith('https://suf.purs.gov.rs/'):
-        print('Bad url')
         return None
 
     page = requests.get(url=url)

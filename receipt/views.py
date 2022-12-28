@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import Receipt
-from .serializers import ReceiptSerializer
+from .serializers import ReceiptSerializer, ReceiptScanSerializer
 from .utils import extract_data_from_receipt
 
 
@@ -12,7 +12,7 @@ def scan_receipt_preview(request):
     if not data:
         return Response({'message': 'QR code not valid.'}, status=406)
 
-    serializer = ReceiptSerializer(data=data)
+    serializer = ReceiptScanSerializer(data=data)
     if serializer.is_valid(raise_exception=True):
         return Response(serializer.data, status=200)
     return Response(serializer.errors, status=400)
