@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-*ipn$r!&f(qgd_@r!rjb0tk-16z^(63tp*%#9wy5ti47o$lzu&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG') == '1'
+DEBUG = True #os.environ.get('DEBUG') == '1'
 
 ALLOWED_HOSTS = ['*']
 
@@ -43,9 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'corsheaders',
+    'knox',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
 
     'receipt',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -143,7 +147,14 @@ if DEBUG:
 REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES' : [
-        'rest_framework.authentication.SessionAuthentication'
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'users.authentication.TokenAuthentication',
     ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+
     'DEFAULT_RENDERER_CLASSES' : DEFAULT_RENDERER_CLASSES
 }
