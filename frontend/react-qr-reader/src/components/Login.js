@@ -1,4 +1,4 @@
-import './style.css';
+import '../style.css';
 import SignUpForm from "./SignUp";
 import { useState } from 'react';
 
@@ -6,21 +6,29 @@ import { useState } from 'react';
 
 export default function LoginForm() {
 
+    const [accessToken, setAccessToken] = useState('')
+    const [refreshToken, setRefreshToken] = useState('')
+    
     async function sendData(data) {
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/auth/login/', {
+            const response = await fetch('http://127.0.0.1:8000/api/token/', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: { 'Content-Type': 'application/json' }
             });
             const result = await response.json();
-            console.log(result);
+            setAccessToken(result['access'])
+            setRefreshToken(result['refresh'])
+            sessionStorage.setItem('token', accessToken)
+            // sessionStorage.setItem('refresh', refreshToken)
+            
         } catch (error) {
             console.error(error);
         }
     }
 
     const form = document.querySelector('form');
+    // console.log(form)
     if (form) {
         form.addEventListener('submit', event => {
             event.preventDefault();
@@ -29,9 +37,9 @@ export default function LoginForm() {
             const data = {};
             for (const [key, value] of formData.entries()) {
                 data[key] = value;
+                
             }
-
-            console.log(data);
+            console.log(data)
             sendData(data);
         })
     };

@@ -20,6 +20,13 @@ html, body {
   color: green;
 }
 
+.loginMess {
+  font-family: Lato;
+  text-align: center;
+  font-size: 20px;
+  color:red;
+}
+
 h1, p {
   font-family: Lato;
   text-align: center;
