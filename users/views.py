@@ -28,12 +28,14 @@ class LoginAPIView(GenericAPIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
-        serializer = AuthTokenSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
+        data=request.data
+        serializer = AuthTokenSerializer
+        if serializer.validate(self):
+            print('aAAA' ,serializer.data)
             user = serializer.validated_data['user']
             login(request, user)
-            print(request.user)
-            return super(LoginAPIView, self).post(request, format=None)
+            print(user)
+            # return super(LoginAPIView, self).post(request, format=None)
         return Response(serializer.errors, status=400)
 
 class LogoutAPIView(GenericAPIView):
