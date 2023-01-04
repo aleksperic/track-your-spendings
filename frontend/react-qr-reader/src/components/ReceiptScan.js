@@ -86,6 +86,7 @@ export default function ReceiptScan() {
             onScan={handleScan}
             style={{ width: "70%" }}
             facingMode="user"
+            legacyMode={false}
           /> : ''}
         </div>
         <div className={message === 'Scanned successfully!' ? "success" : "loginMess"}>{message}</div>
