@@ -4,17 +4,40 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import ErrorPage from '../pages/error-page';
-import App from './App'
+import { BarcodeScanner } from '../components/BarcodeScanner';
+import { DataLoader } from '../components/DataFetching';
+// import { AuthProvider } from '../context/AuthContext';
+import ErrorPage from '../pages/ErrorPage';
 import './index.css'
+import Receipt from './routes/receipt';
+import Root from './routes/root';
 
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Root />,
     errorElement: <ErrorPage />,
+    loader: DataLoader,
+    // children: [
+    //   {
+    //     path: "receipts/:receiptId",
+    //     element: <Receipt />,
+    //   },
+    // ],
+  },
+  {
+    path: '/login',
+    element: <h1>login</h1>
+  },
+  {
+    path: "/scan",
+    element: <BarcodeScanner />,
+  },
+  {
+    path: "/receipts/:receiptId",
+    element: <Receipt />,
   },
 ]);
 
