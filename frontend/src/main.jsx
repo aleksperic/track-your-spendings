@@ -5,12 +5,11 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { BarcodeScanner } from '../components/BarcodeScanner';
-import { DataLoader } from '../components/DataFetching';
-// import { AuthProvider } from '../context/AuthContext';
+
 import ErrorPage from '../pages/ErrorPage';
 import './index.css'
-import Receipt from './routes/receipt';
-import Root from './routes/root';
+import Receipt, { loader as contactLoader } from './routes/receipt';
+import Root, { loader as rootLoader } from './routes/root';
 
 
 
@@ -19,13 +18,14 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
-    loader: DataLoader,
-    // children: [
-    //   {
-    //     path: "receipts/:receiptId",
-    //     element: <Receipt />,
-    //   },
-    // ],
+    loader: rootLoader,
+    children: [
+      {
+        path: "receipts/:receiptId",
+        element: <Receipt />,
+        loader: contactLoader,
+      },
+    ],
   },
   {
     path: '/login',
@@ -38,6 +38,8 @@ const router = createBrowserRouter([
   {
     path: "/receipts/:receiptId",
     element: <Receipt />,
+    loader: contactLoader
+
   },
 ]);
 
