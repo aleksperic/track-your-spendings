@@ -380,3 +380,36 @@ i {
   justify-content: center;
   width: 100%;
 }
+
+#container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+}
+
+#header {
+  display: flex;
+  background-color: #f7f7f7;
+  border-right: solid 1px #e3e3e3;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e3e3e3;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+#content {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+#login {
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+}
