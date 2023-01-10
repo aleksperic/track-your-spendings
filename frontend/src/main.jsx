@@ -8,8 +8,10 @@ import { BarcodeScanner } from '../components/BarcodeScanner';
 
 import ErrorPage from '../pages/ErrorPage';
 import './index.css'
-import Receipt, { loader as contactLoader } from './routes/receipt';
+import Receipt, { loader as receiptLoader } from './routes/receipt';
 import Root, { loader as rootLoader } from './routes/root';
+import EditReceipt from './routes/edit';
+import LoginPage from '../pages/LoginPage';
 
 
 
@@ -23,13 +25,26 @@ const router = createBrowserRouter([
       {
         path: "receipts/:receiptId",
         element: <Receipt />,
-        loader: contactLoader,
+        loader: receiptLoader,
+      },
+      {
+        path: "receipts/:receiptId/edit",
+        element: <EditReceipt />,
+        loader: receiptLoader,
+      },
+      {
+        path: '/scan',
+        element: <BarcodeScanner />
+      },
+      {
+        path: '/login',
+        element: <LoginPage />
       },
     ],
   },
   {
     path: '/login',
-    element: <h1>login</h1>
+    element: <LoginPage />
   },
   {
     path: "/scan",
@@ -38,13 +53,16 @@ const router = createBrowserRouter([
   {
     path: "/receipts/:receiptId",
     element: <Receipt />,
-    loader: contactLoader
+    loader: receiptLoader
 
   },
+  
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider router={router}>
+      
+    </RouterProvider>
   </React.StrictMode>,
 )
