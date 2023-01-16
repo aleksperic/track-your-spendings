@@ -10,7 +10,7 @@ const Header = () => {
         if (user) {
             setUserId(user.username)
         }
-    },[user])
+    }, [user])
 
     return (
         <div id="header">
@@ -38,10 +38,10 @@ const Header = () => {
             </div>
             <div id="links">
                 {/* <button type="submit">Scan</button> */}
-                
+
 
                 <Link to={'/'}><button>Home</button></Link>
-                
+
                 <span> | </span>
                 <Link to={'/scan'}>Scan</Link>
                 <span> | </span>
