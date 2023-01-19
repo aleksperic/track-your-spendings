@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { Form } from "react-router-dom";
-
+import { Form, useNavigate } from "react-router-dom";
 import { useZxing } from "react-zxing";
 
 export const BarcodeScanner = () => {
@@ -11,19 +10,26 @@ export const BarcodeScanner = () => {
   const [lastScanned, setLastScanned] = useState("");
   const [result, setResult] = useState("");
 
+  const navigate = useNavigate()
+
+
   const { ref } = useZxing({
     onResult(result) {
       setResult(result.getText());
     },
   });
 
+  const authTokens = JSON.parse(localStorage.getItem('authTokens'))
   const handleQrScan = async () => {
     if (result && result !== lastScanned) {
       setLastScanned(result);
       try {
         const response = await fetch('http://localhost:8000/api/receipt/scan/', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authTokens.access}`
+          },
           body: JSON.stringify({ qrCode: result })
         });
         if (response.status === 200) {
@@ -72,17 +78,9 @@ export const BarcodeScanner = () => {
             <Form method="post">
               <button type="submit">Save</button>
             </Form>
-            <Form
-              method="post"
-              action="destroy"
-              onSubmit={(event) => {
-                if (!confirm("Please confirm you want to delete this record.")) {
-                  event.preventDefault();
-                }
-              }}
-            >
-              <button type="submit">Delete</button>
-            </Form>
+            <button type="button" onClick={() => { navigate(-1) }}>
+              Cancel
+            </button>
           </div>
         </div> : <video ref={ref} />}
     </>
