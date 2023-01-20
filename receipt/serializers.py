@@ -22,6 +22,7 @@ class ReceiptScanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Receipt
         fields = [
+            'id',
             'store', 
             'items', 
             'total_price', 
