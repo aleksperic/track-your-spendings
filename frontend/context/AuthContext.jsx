@@ -29,8 +29,8 @@ export const AuthProvider = ({ children }) => {
                     'password': password,
                 })
             })
+            const data = await response.json()
             if (response.status === 200) {
-                const data = await response.json()
                 setAuthTokens(data)
                 setUser(jwt_decode(data.access))
                 localStorage.setItem('authTokens', JSON.stringify(data))
@@ -54,30 +54,33 @@ export const AuthProvider = ({ children }) => {
         const response = await fetch('http://localhost:8000/api/token/refresh/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 'refresh': authTokens.refresh })
+            body: JSON.stringify({ 'refresh': authTokens?.refresh })
         })
         const data = await response.json()
-        console.log(data);
-        console.log('TOKENS', authTokens)
         if (response.status === 200) {
-            console.log('ok');
             setAuthTokens(data)
             setUser(jwt_decode(data.access))
             localStorage.setItem('authTokens', JSON.stringify(data))
         } else {
             logoutUser()
         }
+        if (loading) {
+            setLoading(false)
+        }
     }
 
     const contextData = {
         user: user,
-        authTokens:authTokens,
+        authTokens: authTokens,
         loginUser: loginUser,
         logoutUser: logoutUser,
 
     }
 
     useEffect(() => {
+        if (loading) {
+            refreshToken()
+        }
         const nineMinutes = 1000 * 60 * 9
         let interval = setInterval(() => {
             if (authTokens) {
@@ -90,7 +93,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={contextData}>
-            {children}
+            {loading ? null : children}
         </AuthContext.Provider>
     )
 }
