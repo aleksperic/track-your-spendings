@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import { useState, useEffect } from "react";
-import { Form, useNavigate } from "react-router-dom";
+import { Form, redirect, useNavigate } from "react-router-dom";
 import { useZxing } from "react-zxing";
+import AuthContext from "../context/AuthContext";
 
 export const BarcodeScanner = () => {
 
@@ -11,7 +13,7 @@ export const BarcodeScanner = () => {
   const [result, setResult] = useState("");
 
   const navigate = useNavigate()
-
+  const { logoutUser } = useContext(AuthContext)
 
   const { ref } = useZxing({
     onResult(result) {
@@ -37,6 +39,8 @@ export const BarcodeScanner = () => {
           setQrData(data);
           setItems(JSON.parse(data.items))
           setIsScanned(true);
+        } else if (response.status === 401) {
+          logoutUser()
         }
       } catch (err) {
         console.error(err);
