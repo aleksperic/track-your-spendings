@@ -1,6 +1,5 @@
-import { useContext } from "react";
-import { useState, useEffect } from "react";
-import { Form, redirect, useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { Form, useNavigate } from "react-router-dom";
 import { useZxing } from "react-zxing";
 import AuthContext from "../context/AuthContext";
 
@@ -13,7 +12,7 @@ export const BarcodeScanner = () => {
   const [result, setResult] = useState("");
 
   const navigate = useNavigate()
-  const { logoutUser } = useContext(AuthContext)
+  const { logoutUser, authTokens } = useContext(AuthContext)
 
   const { ref } = useZxing({
     onResult(result) {
@@ -21,7 +20,22 @@ export const BarcodeScanner = () => {
     },
   });
 
-  const authTokens = JSON.parse(localStorage.getItem('authTokens'))
+  const handleSave = async () => {
+    const response = await fetch('http://localhost:8000/api/receipt/create/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authTokens.access}`
+      },
+      body: JSON.stringify(qrData)
+    });
+    if (response.status === 200) {
+      console.log(await response.json())
+    } else { 
+      console.log(await response.json()); 
+    }
+  }
+
   const handleQrScan = async () => {
     if (result && result !== lastScanned) {
       setLastScanned(result);
@@ -80,7 +94,7 @@ export const BarcodeScanner = () => {
           </div>
           <div id='scan-buttons'>
             <Form method="post">
-              <button type="submit">Save</button>
+              <button type="submit" onClick={() => { handleSave() }}>Save</button>
             </Form>
             <button type="button" onClick={() => { navigate(-1) }}>
               Cancel
