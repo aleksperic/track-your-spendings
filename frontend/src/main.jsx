@@ -2,67 +2,45 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {
   createBrowserRouter,
+  createRoutesFromElements,
   RouterProvider,
+  Route
 } from "react-router-dom";
+import { AuthProvider } from '../context/AuthContext';
 import { BarcodeScanner } from '../components/BarcodeScanner';
 
+import LoginPage from '../pages/LoginPage';
+import LogoutPage from '../pages/LogoutPage';
 import ErrorPage from '../pages/ErrorPage';
 import './index.css'
-import Receipt, { loader as receiptLoader } from './routes/receipt';
 import Root, { loader as rootLoader } from './routes/root';
-import EditReceipt from './routes/edit';
-import LoginPage from '../pages/LoginPage';
+import Receipt, { loader as receiptLoader } from './routes/receipt';
+import PrivateRoutes from '../utils/PrivateRoutes';
+import Index from './routes';
 
 
+const router = createBrowserRouter(
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    loader: rootLoader,
-    children: [
-      {
-        path: "receipts/:receiptId",
-        element: <Receipt />,
-        loader: receiptLoader,
-      },
-      {
-        path: "receipts/:receiptId/edit",
-        element: <EditReceipt />,
-        loader: receiptLoader,
-      },
-      {
-        path: '/scan',
-        element: <BarcodeScanner />
-      },
-      {
-        path: '/login',
-        element: <LoginPage />
-      },
-    ],
-  },
-  {
-    path: '/login',
-    element: <LoginPage />
-  },
-  {
-    path: "/scan",
-    element: <BarcodeScanner />,
-  },
-  {
-    path: "/receipts/:receiptId",
-    element: <Receipt />,
-    loader: receiptLoader
-
-  },
-  
-]);
+  createRoutesFromElements(
+    <Route path='/' element={<Root />} loader={rootLoader} errorElement={<ErrorPage />}>
+      <Route errorElement={<ErrorPage />}>
+        <Route element={<PrivateRoutes />}>
+          <Route index element={<Index />} />
+          <Route path='receipts/:receiptId' element={<Receipt />} loader={receiptLoader} />
+          <Route path='receipts/:receiptId/destroy' element={<Index />} loader={receiptLoader} />
+          <Route path='/logout' element={<LogoutPage />} />
+          <Route path='/scan' element={<BarcodeScanner />} />
+        </Route>
+      </Route>
+      <Route path='/login' element={<LoginPage />} />
+    </Route>
+  )
+)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router}>
-      
-    </RouterProvider>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>,
 )
