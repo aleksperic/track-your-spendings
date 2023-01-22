@@ -7,7 +7,7 @@ const LogoutPage = () => {
     const { logoutUser } = useContext(AuthContext)
     const navigate = useNavigate()
 
-    const logout = async () => {
+    const handleLogout = async () => {
         await logoutUser()
         navigate('/login')
     }
@@ -15,7 +15,7 @@ const LogoutPage = () => {
     return (
         <div id='container'>
             <div id="logout">
-                <button onClick={logout}>
+                <button onClick={handleLogout}>
                     Logout
                 </button>
             </div>
