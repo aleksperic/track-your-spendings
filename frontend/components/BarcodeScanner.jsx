@@ -29,12 +29,11 @@ export const BarcodeScanner = () => {
       },
       body: JSON.stringify(qrData)
     });
-    if (response.status === 200) {
-      console.log(await response.json())
-    } else { 
-      console.log(await response.json()); 
-    }
+    
+    if (response.status === 201) {
+      navigate('/')
   }
+}
 
   const handleQrScan = async () => {
     if (result && result !== lastScanned) {
