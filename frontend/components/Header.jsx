@@ -12,7 +12,7 @@ const Header = () => {
                     <input
                         id="q"
                         aria-label="Search receipts"
-                        placeholder="Search"
+                        placeholder="Pretraži..."
                         type="search"
                         name="q"
                     />
@@ -31,18 +31,18 @@ const Header = () => {
             </div>
             <div id="links">
                 <nav>
-                    <Link to={'/'}>Home</Link>
+                    {user && <span>Zdravo, {user.first_name} | </span>}
+                    <Link to={'/'}>Početna strana</Link>
                     <span> | </span>
-                    <Link to={'/scan'}>Scan</Link>
+                    <Link to={'/scan'}>Skeniraj račun</Link>
                     <span> | </span>
                     {user ?
                         <>
                             <span> | </span>
-                            <Link to={'/logout'}>Logout</Link>
+                            <Link to={'/logout'}>Odjavi se</Link>
                         </>
-                        : <Link to={'/login'}>Login</Link>
+                        : <Link to={'/login'}>Prijavi se</Link>
                     }
-                    {user && <span> | Hello {user.first_name}</span>}
                 </nav>
             </div>
         </div>
