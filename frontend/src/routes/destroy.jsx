@@ -13,6 +13,5 @@ export async function action({ params }) {
         },
     });
     const data = await response.json()
-    console.log(data);
     return redirect('/')
 }
