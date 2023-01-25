@@ -17,7 +17,6 @@ const LoginPage = () => {
         <div id='container'>
             {user ? <Navigate to='/' /> :
                 (<div id="login">
-                    {/* <h1>Please login first...</h1> */}
                     <form onSubmit={handleSubmit}>
                         <input type="text" name="username" placeholder="Enter username..." />
                         <input type="password" name="password" placeholder="Enter password..." />
