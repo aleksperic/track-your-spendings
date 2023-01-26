@@ -20,7 +20,7 @@ const LoginPage = () => {
                     <form onSubmit={handleSubmit}>
                         <input type="text" name="username" placeholder="Enter username..." />
                         <input type="password" name="password" placeholder="Enter password..." />
-                        <input type="submit" />
+                        <input type="submit" value="Prijavi se" />
                     </form>
                 </div>)
             }

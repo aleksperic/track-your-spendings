@@ -16,7 +16,7 @@ const LogoutPage = () => {
         <div id='container'>
             <div id="logout">
                 <button onClick={handleLogout}>
-                    Logout
+                    Odjavi se
                 </button>
             </div>
         </div>
