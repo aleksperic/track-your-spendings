@@ -9,7 +9,7 @@ const LogoutPage = () => {
 
     const handleLogout = async () => {
         await logoutUser()
-        navigate('/login')
+        navigate('/')
     }
 
     return (
