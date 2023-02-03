@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Navigate, redirect } from "react-router-dom"
+import { Link, Navigate, redirect } from "react-router-dom"
 import AuthContext from "../context/AuthContext";
 
 const LoginPage = () => {
@@ -22,6 +22,7 @@ const LoginPage = () => {
                         <input type="password" name="password" placeholder="Enter password..." />
                         <input type="submit" value="Prijavi se" />
                     </form>
+                    <h3>Nemate nalog? <Link to={'/register'}>Registruj se</Link>.</h3>
                 </div>)
             }
         </div>
