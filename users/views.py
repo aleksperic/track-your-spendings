@@ -1,43 +1,31 @@
-from django.contrib.auth import login, logout
+from django.contrib.auth.models import User
 
-from knox.models import AuthToken
-from rest_framework import permissions
-from rest_framework.authtoken.serializers import AuthTokenSerializer
-from rest_framework.decorators import api_view
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .serializers import RegisterSerializer, UserSerializer
+from users.authentication import TokenAuthentication
+
+from .serializers import (
+    RegisterSerializer,
+    UserSerializer,
+    MyTokenObtainPairSerializer
+)
 
 
-class RegisterAPIView(GenericAPIView):
-    serializer_class=RegisterSerializer
-    
-    def post(self, request, *args, **kwargs):
-        print('HQQQ')
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        return Response({
-        "user": UserSerializer(user, context=self.get_serializer_context()).data,
-        "token": AuthToken.objects.create(user)[1]
-        })
-    
+class UserDetailAPI(APIView):
+    def get(self, request, *args, **kwargs):
+        user = User.objects.get(id=request.user.id)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
-class LoginAPIView(GenericAPIView):
-    permission_classes = (permissions.AllowAny,)
 
-    def post(self, request, format=None):
-        data=request.data
-        serializer = AuthTokenSerializer
-        if serializer.validate(self):
-            print('aAAA' ,serializer.data)
-            user = serializer.validated_data['user']
-            login(request, user)
-            print(user)
-            # return super(LoginAPIView, self).post(request, format=None)
-        return Response(serializer.errors, status=400)
+class RegisterUserAPIView(CreateAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
 
-class LogoutAPIView(GenericAPIView):
-    pass
 
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
