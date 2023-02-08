@@ -12,6 +12,5 @@ export async function action({ params }) {
             'Authorization': 'Bearer ' + authTokens.access
         },
     });
-    const data = await response.json()
     return redirect('/')
 }
