@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
+from django.utils.translation import gettext_lazy as _
+from django.core.validators import EmailValidator
 
 from rest_framework import serializers
-from rest_framework.response import Response
 from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -17,11 +18,18 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     username = serializers.CharField(
         required=True,
-        validators=[UniqueValidator(queryset=User.objects.all())]
+        validators=[
+            UniqueValidator(queryset=User.objects.all(),
+                            message='Korisničko ime je zauzeto!')
+        ]
     )
     email = serializers.EmailField(
         required=True,
-        validators=[UniqueValidator(queryset=User.objects.all())]
+        validators=[
+            UniqueValidator(queryset=User.objects.all(),
+                            message='Email adresa je zauzeta!'),
+            EmailValidator(message='Neispravna email adresa!')
+        ]
     )
     password = serializers.CharField(
         write_only=True, required=True, validators=[validate_password])
@@ -39,7 +47,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError(
-                {"password": "Password fields didn't match."})
+                {"password": "Lozinke se ne podudaraju!."})
         return attrs
 
     def create(self, validated_data):

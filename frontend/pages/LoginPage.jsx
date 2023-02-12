@@ -23,8 +23,8 @@ const LoginPage = () => {
                         <input type="submit" value="Prijavi se" />
                     </form>
                     <h3>Nemate nalog? <Link to={'/register'}>Registruj se</Link>.</h3>
-                </div>)
-            }
+                </div>
+                )}
         </div>
     )
 }
