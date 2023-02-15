@@ -31,7 +31,6 @@ export const BarcodeScanner = () => {
       },
       body: JSON.stringify(qrData)
     });
-
     if (response.status === 201) {
       navigate('/')
     }
@@ -49,8 +48,8 @@ export const BarcodeScanner = () => {
           },
           body: JSON.stringify({ qrCode: result })
         });
+        const data = await response.json();
         if (response.status === 200) {
-          const data = await response.json();
           setQrData(data);
           setItems(JSON.parse(data.items))
           setReceiptOrg(JSON.parse(data.receipt_org))
@@ -86,15 +85,13 @@ export const BarcodeScanner = () => {
             {qrData.store && (
               <div id='receipt-detail'>
                 <div id='scan-div'>
-                  <>
-                    Prodajno mesto: <input className="scan-input" type="text" value={qrData.store} readOnly disabled />
-                    Artikli: <textarea className="scan-input" type="text" value={itemsList} readOnly disabled />
-                    Ukupan iznos: <input className="scan-input" type="text" value={qrData.total_price} readOnly disabled />
-                    PDV: <input className="scan-input" type="text" value={qrData.tax_price} readOnly disabled />
-                    Vreme: <input className="scan-input" type="text" value={qrData.purchase_time} readOnly disabled />
-                    Datum: <input className="scan-input" type="text" value={qrData.purchase_date} readOnly disabled />
-                    PFR broj računa: <input className="scan-input" type="text" value={qrData.receipt_id} readOnly disabled />
-                  </>
+                  Prodajno mesto: <input className="scan-input" type="text" value={qrData.store} readOnly disabled />
+                  Artikli: <textarea className="scan-input" type="text" value={itemsList} readOnly disabled />
+                  Ukupan iznos: <input className="scan-input" type="text" value={qrData.total_price} readOnly disabled />
+                  PDV: <input className="scan-input" type="text" value={qrData.tax_price} readOnly disabled />
+                  Vreme: <input className="scan-input" type="text" value={qrData.purchase_time} readOnly disabled />
+                  Datum: <input className="scan-input" type="text" value={qrData.purchase_date} readOnly disabled />
+                  PFR broj računa: <input className="scan-input" type="text" value={qrData.receipt_id} readOnly disabled />
                   <div id='scan-buttons'>
                     <Form method="post">
                       <button type="submit" onClick={() => { handleSave() }}>Sačuvaj</button>
