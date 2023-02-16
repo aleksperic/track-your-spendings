@@ -39,7 +39,6 @@ export default function Receipt() {
       {user && receipt ? (
         <div id='receipt-detail'>
           <div id='scan-div'>
-            <>
               Prodajno mesto: <input className="scan-input" type="text" value={receipt.store} readOnly disabled />
               Artikli: <textarea className="scan-input" type="text" value={itemsList} readOnly disabled />
               Ukupan iznos: <input className="scan-input" type="text" value={receipt.total_price} readOnly disabled />
@@ -47,7 +46,6 @@ export default function Receipt() {
               Vreme: <input className="scan-input" type="text" value={receipt.purchase_time} readOnly disabled />
               Datum: <input className="scan-input" type="text" value={receipt.purchase_date} readOnly disabled />
               PFR broj računa: <input className="scan-input" type="text" value={receipt.receipt_id} readOnly disabled />
-            </>
             <div>
               <Form
                 method="delete"
