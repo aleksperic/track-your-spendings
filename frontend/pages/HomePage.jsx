@@ -12,7 +12,6 @@ const HomePage = () => {
             </Link>
             <h3>Nemate nalog? <Link to={'/register'}>Registruj se</Link>.</h3>
         </div>
-
     )
 }
 
