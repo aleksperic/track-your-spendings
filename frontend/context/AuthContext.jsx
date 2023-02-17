@@ -35,10 +35,8 @@ export const AuthProvider = ({ children }) => {
                 setUser(jwt_decode(data.access))
                 localStorage.setItem('authTokens', JSON.stringify(data))
             } else if (response.status === 401) {
-                alert(response.statusText + '\nPlease provide valid credentials...')
-            } else if (response.status === 400) {
-                alert(response.statusText + '\nPlease provide valid credentials...')
-            }
+                alert('Pogrešno korisničko ime ili lozinka!\nPokušajte ponovo...')
+            } 
         } catch (error) {
             console.error(error);
         }
@@ -74,7 +72,6 @@ export const AuthProvider = ({ children }) => {
         authTokens: authTokens,
         loginUser: loginUser,
         logoutUser: logoutUser,
-
     }
 
     useEffect(() => {
