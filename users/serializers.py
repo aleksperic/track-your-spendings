@@ -20,7 +20,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         required=True,
         validators=[
             UniqueValidator(queryset=User.objects.all(),
-                            message='Korisničko ime je zauzeto!')
+                            message='Korisničko ime je zauzeto!\nIzaberite drugo!')
         ]
     )
     email = serializers.EmailField(
