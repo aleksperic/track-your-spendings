@@ -12,8 +12,14 @@ def extract_data_from_receipt(url: str) -> dict | None:
     soup = BeautifulSoup(page.content, "html.parser")
     results = soup.find(id="collapse1")
 
-    receipt_org: str = str(results.find_all('pre'))[1:-1]
+    receipt_org_extract = list(results.find('pre').children)
     receipt: str = str(results.find_all('pre')).split('>')[1].split('<')[0]
+
+    receipt_org: dict = {
+        'receipt_start': receipt_org_extract[0], 
+        'receipt_qr': receipt_org_extract[2].get('src'),
+        'receipt_end': receipt_org_extract[3]
+        }
 
     receipt_element_list: list = []
     receipt = receipt.split('\n')
@@ -51,6 +57,13 @@ def extract_data_from_receipt(url: str) -> dict | None:
     data['purchase_date'] = datetime.strptime(purchase_date, '%d/%m/%Y').date()
     data['purchase_time'] = datetime.strptime(purchase_time, '%X').time()
     data['receipt_id'] = receipt_id
-    data['receipt_org'] = receipt_org
+    data['receipt_org'] = json.dumps(receipt_org)
     
     return data
+
+# if __name__ == '__main__':
+
+#     url = 'https://suf.purs.gov.rs/v/?vl=A1FGU0JUSEpGUUZTQlRISkbYQQEADj8BAITsyQEAAAAAAAABhca%2bQ2AAAAC368V0AwhDC8rN8PnANuXSsUv92GRAXwGrtdHnX9XfeFRYf7zuM2HFSstfOvfSYdpYURGxnnEr%2b7ikzZSi51g7gT0ZBl2J6zj6h2%2fCni4aTn9tTZEO2zIIpXs%2fVycwM1V2VYfzMjMmgCmIcM9xZ5T30eYDZasYC7FfalimGb7xSAaxpgX%2beZAXt8QcO8BopRMuA%2fnCWhKOdvjfEoNaeWv4p64bMjjwsz4B73Cwboa3KoclGARtCxj1ug3w6R72WQ5TTzRNDjE5DhMEHtGJoPbkkCb%2fdO3SY2hzHj9vw0gOK8FjWob2S7JuplF6njQ8qc%2bvVS%2fl85naXTRI7I5iRVJGZwSVpLMHvtDsQ8pYfBoA2lo8o7Tu7ucRAKPhp00IhpYKlX9CHjAhwvSsvPFajKJc0jFgB0QpbFmWDO9f1k2YhVJApKHYD7FUwbyZTi6X72yV9UnWv4CR9xTLQ0ZU0TSpi7D%2fDiA0wuADKZgejUdSw%2fXJDYL5Zrj%2bZ0bwORXdDA%2f7NWL5p6BdcLGsONCitNnzcJlE3vkLQED4t07eIG6ZT%2fFZcn7sG%2b%2bKw%2brx4IEf2dn4%2fs3i0zY7RxaA7pOLg0VK1NIiBF2jw3pToS5pO330LHl0PA%2f2DW%2bL5w%2fINF2ifhy4Q8w54dwkk4SSpzLfI55C5luxv4V8u8KWoH%2bnCuIBDLjJJC40Rsq%2f4GAE4nO6AbA%3d'
+#     data = extract_data_from_receipt(url)
+
+#     print(data)
