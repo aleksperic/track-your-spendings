@@ -18,23 +18,30 @@ import Receipt, { loader as receiptLoader } from './routes/receipt';
 import { action as destroyAction } from './routes/destroy';
 import PrivateRoutes from '../utils/PrivateRoutes';
 import Index from './routes';
+import HomePage from '../pages/HomePage';
+import RegisterPage from '../pages/RegisterPage';
+import SpendingChart from '../components/SpendingChart';
 
 
 const router = createBrowserRouter(
 
   createRoutesFromElements(
+    <>
     <Route path='/' element={<Root />} loader={rootLoader} errorElement={<ErrorPage />}>
       <Route errorElement={<ErrorPage />}>
         <Route element={<PrivateRoutes />}>
-          <Route index element={<Index />} />
+          <Route index element={<SpendingChart />} />
           <Route path='receipts/:receiptId' element={<Receipt />} loader={receiptLoader} />
           <Route path='receipts/:receiptId/destroy' element={<Receipt />} action={destroyAction} />
           <Route path='/logout' element={<LogoutPage />} />
           <Route path='/scan' element={<BarcodeScanner />} />
         </Route>
       </Route>
-      <Route path='/login' element={<LoginPage />} />
     </Route>
+    <Route path='/index' element={<HomePage />} />
+    <Route path='/login' element={<LoginPage />} />
+    <Route path='/register' element={<RegisterPage />} />
+    </>
   )
 )
 
